@@ -1,7 +1,5 @@
+#include <apue.h>
 #include <pwd.h>
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
 
 struct passwd *my_getpwnam(const char *);
 
@@ -15,17 +13,13 @@ int main(void)
 
   fputs("Please enter a user name: ", stdout);
 
-  if ((name = fgets(buf, sizeof(buf), stdin)) == NULL) {
-    printf("fgets error");
-    exit(-1);
-  }
+  if ((name = fgets(buf, sizeof(buf), stdin)) == NULL)
+    err_sys("fgets error");
 
   name = trim(name);
 
-  if ((pwent = my_getpwnam(name)) == NULL) {
-    printf("my_getpwnam error");
-    exit(-1);
-  }
+  if ((pwent = my_getpwnam(name)) == NULL)
+    err_sys("my_getpwnam error");
 
   printf("Name: %s\n", pwent->pw_name);
   printf("Password:%s\n", pwent->pw_passwd);
